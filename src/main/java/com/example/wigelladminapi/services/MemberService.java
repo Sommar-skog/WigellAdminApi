@@ -41,11 +41,21 @@ public class MemberService  implements MemberServiceInterface{
 
     @Override
     public Member updateMember(Member member) {
+        //TODO kontrollera att member finns i databasen
+        //TODO Gör NULL-kontroller och uppdatera endast fälten som skickas in som inte är null
+        //TODO Kontrollera om eventuell adress redan finns, i så fall koppla till den adress som finns, annars skapa ny
+        //TODO Kontrollera ev mail så att den är uniq, annars chasta ett exception tex NotUniqException
         return null;
     }
 
     @Override
     public Member addMember(Member member) {
+
+        //TODO Kontrollera om adressen redan finns och inte är NULL. Om den finns använd det id annars skapa ny adress
+        //TODO Kontrollera om email är uniq och inte NULL - om den redan finns chasta ett exception tex NotUniqException
+        //TODO kontrollera så att inte förnamn är NULL
+        //TODO Kontrollera så att inte efternamn är NULL
+        //TODO Kontrollera så att inte dateOfBirth är NULL även att det är ett datum som har varit och inte ligger i framtiden
         return null;
     }
 
