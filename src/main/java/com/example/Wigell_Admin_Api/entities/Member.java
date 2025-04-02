@@ -5,29 +5,30 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name= "member")
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "FirstName", length = 50)
+    @Column(name = "first_name", length = 50)
     private String firstName;
 
-    @Column(name = "LastName", length = 50)
+    @Column(name = "last_name", length = 50)
     private String lastName;
 
     @ManyToOne
-    @JoinColumn(name = "Address_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @Column(name = "Email", unique = true, nullable = false, length = 30)
+    @Column(name = "email", unique = true, nullable = false, length = 30)
     private String email;
 
-    @Column(name = "Phone",nullable = true, length = 11)
+    @Column(name = "phone",nullable = true, length = 11)
     private String phone;
 
-    @Column(name = "Date_Of_Birth", nullable = false, length = 8)
+    @Column(name = "date_of_birth", nullable = false, length = 10)
     private Date dateOfBirth;
 
     public Member() {

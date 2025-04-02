@@ -3,19 +3,20 @@ package com.example.Wigell_Admin_Api.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "address")
 public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "Street", nullable = false, length = 50)
+    @Column(name = "street", nullable = false, length = 50)
     private String street;
 
-    @Column(name = "Postal_Code", nullable = false, length = 6)
+    @Column(name = "postal_code", nullable = false, length = 6)
     private String postalCode;
 
-    @Column(name = "City", nullable = false, length = 30)
+    @Column(name = "city", nullable = false, length = 30)
     private String city;
 
     public Address() {
