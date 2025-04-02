@@ -17,8 +17,8 @@ public class Member {
     @Column(name = "LastName", length = 50)
     private String lastName;
 
-    @Column(name = "Address")
     @ManyToOne
+    @JoinColumn(name = "Address_id")
     private Address address;
 
     @Column(name = "Email", unique = true, nullable = false, length = 30)
