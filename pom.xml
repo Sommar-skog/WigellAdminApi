@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>Wigell_Admin_Api</artifactId>
+	<artifactId>WigellAdminAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Wigell_Admin_Api</name>
+	<name>WigellAdminAPI</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
