@@ -7,6 +7,7 @@ import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,9 +53,19 @@ public class MemberService  implements MemberServiceInterface{
     public Member addMember(Member member) {
 
         //TODO Kontrollera om adressen redan finns och inte är NULL. Om den finns använd det id annars skapa ny adress
+
         //TODO Kontrollera om email är uniq och inte NULL - om den redan finns chasta ett exception tex NotUniqException
+
         //TODO kontrollera så att inte förnamn är NULL
+        if (member.getFirstName() == null || member.getFirstName().isEmpty()) {
+            //Throw Exception
+        }
+
         //TODO Kontrollera så att inte efternamn är NULL
+        if (member.getLastName() == null || member.getLastName().isEmpty()) {
+            // Throw Exception
+        }
+
         //TODO Kontrollera så att inte dateOfBirth är NULL även att det är ett datum som har varit och inte ligger i framtiden
         return null;
     }
@@ -69,4 +80,15 @@ public class MemberService  implements MemberServiceInterface{
 
         throw new ResourceNotFoundException(); //Lägg till parametrar
     }
+
+    //Kontroll-metoder
+    private boolean isEmailTaken(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
+    private boolean isDateOfBirthValid(LocalDate dateOfBirth) {
+        return dateOfBirth.isBefore(LocalDate.now()) && dateOfBirth.isAfter(LocalDate.now().minusYears(115));
+    }
+
+
 }

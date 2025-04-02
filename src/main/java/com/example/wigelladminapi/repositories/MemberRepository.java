@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
     //CRUD får automatiskt - verkar inte som jag behöver lägga till fler metoder här
+
+    boolean existsByEmail(String email);
 }

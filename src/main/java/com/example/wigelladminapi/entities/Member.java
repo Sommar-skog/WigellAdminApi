@@ -2,6 +2,7 @@ package com.example.wigelladminapi.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -29,8 +30,7 @@ public class Member {
     private String phone;
 
     @Column(name = "date_of_birth", nullable = false, length = 10)
-    private Date dateOfBirth;
-
+    private LocalDate dateOfBirth;
     public Member() {
 
     }
@@ -83,11 +83,11 @@ public class Member {
         this.phone = phone;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
