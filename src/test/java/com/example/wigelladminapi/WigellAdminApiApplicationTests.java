@@ -1,4 +1,4 @@
-package com.example.Wigell_Admin_Api;
+package com.example.wigelladminapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

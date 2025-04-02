@@ -1,4 +1,4 @@
-package com.example.Wigell_Admin_Api.entities;
+package com.example.wigelladminapi.entities;
 
 import jakarta.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.example.Wigell_Admin_Api;
+package com.example.wigelladminapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

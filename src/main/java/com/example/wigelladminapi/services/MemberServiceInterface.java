@@ -1,6 +1,6 @@
-package com.example.Wigell_Admin_Api.services;
+package com.example.wigelladminapi.services;
 
-import com.example.Wigell_Admin_Api.entities.Member;
+import com.example.wigelladminapi.entities.Member;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public interface MemberServiceInterface {
     Member getMemberById(Long id);
     Member updateMember(Member member);
     Member addMember(Member member);
-    void deleteMember(Member member);
+    void deleteMember(Long id);
 
 
 }

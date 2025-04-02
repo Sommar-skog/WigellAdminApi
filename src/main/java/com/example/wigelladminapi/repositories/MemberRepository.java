@@ -1,6 +1,6 @@
-package com.example.Wigell_Admin_Api.repositories;
+package com.example.wigelladminapi.repositories;
 
-import com.example.Wigell_Admin_Api.entities.Member;
+import com.example.wigelladminapi.entities.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
