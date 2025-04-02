@@ -44,15 +44,40 @@ public class MemberService  implements MemberServiceInterface{
 
     @Override
     public Member updateMember(Member member) {
-        //TODO kontrollera att member finns i databasen
+        Optional<Member> memberToUpdate = memberRepository.findById(member.getId());
 
-        //TODO Gör NULL-kontroller och uppdatera endast fälten som skickas in som inte är null
+        if (memberToUpdate.isPresent()) {
+            Member updatedMember = memberToUpdate.get();
+            //TODO Gör NULL-kontroller och uppdatera endast fälten som skickas in som inte är null
+            if (member.getFirstName() != null || member.getFirstName().isEmpty()) {
+                updatedMember.setFirstName(member.getFirstName());
+            }
+            if (member.getLastName() != null || member.getLastName().isEmpty()) {
+                updatedMember.setLastName(member.getLastName());
+            }
+            if (member.getEmail() != null || member.getEmail().isEmpty()) {
+                if (!isEmailTaken(member.getEmail())) {
+                    updatedMember.setEmail(member.getEmail());
+                } else {
+                    throw new NotUniqException(); //TODO lägg till parametrar
+                }
+            }
+            if (member.getPhone() != null || member.getPhone().isEmpty()) {
+                updatedMember.setPhone(member.getPhone());
+            }
+            if (member.getDateOfBirth() != null) {
+                if(isDateOfBirthValid(member.getDateOfBirth())) {
+                    updatedMember.setDateOfBirth(member.getDateOfBirth());
+                }
+            }
+            if (member.getAddress() != null){
+                //TODO lägg till validering av adress
 
-        //TODO Kontrollera om eventuell adress redan finns, i så fall koppla till den adress som finns, annars skapa ny
+            }
+            return memberRepository.save(updatedMember);
+        }
 
-        //TODO Kontrollera ev mail så att den är uniq, annars chasta ett exception tex NotUniqException
-
-        return null;
+        throw new ResourceNotFoundException(); //TODO lägg till parametrar
     }
 
     @Override
