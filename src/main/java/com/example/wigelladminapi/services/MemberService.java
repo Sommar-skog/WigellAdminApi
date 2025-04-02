@@ -1,6 +1,8 @@
 package com.example.wigelladminapi.services;
 
 import com.example.wigelladminapi.entities.Member;
+import com.example.wigelladminapi.exceptions.InvalidInputException;
+import com.example.wigelladminapi.exceptions.NotUniqException;
 import com.example.wigelladminapi.exceptions.ResourceNotFoundException;
 import com.example.wigelladminapi.repositories.MemberRepository;
 import jakarta.persistence.NoResultException;
@@ -37,15 +39,19 @@ public class MemberService  implements MemberServiceInterface{
         if (result.isPresent()) {
             return result.get();
         }
-        throw new ResourceNotFoundException(); //Lägg till rätt parametrar
+        throw new ResourceNotFoundException(); //TODO Lägg till rätt parametrar
     }
 
     @Override
     public Member updateMember(Member member) {
         //TODO kontrollera att member finns i databasen
+
         //TODO Gör NULL-kontroller och uppdatera endast fälten som skickas in som inte är null
+
         //TODO Kontrollera om eventuell adress redan finns, i så fall koppla till den adress som finns, annars skapa ny
+
         //TODO Kontrollera ev mail så att den är uniq, annars chasta ett exception tex NotUniqException
+
         return null;
     }
 
@@ -54,20 +60,28 @@ public class MemberService  implements MemberServiceInterface{
 
         //TODO Kontrollera om adressen redan finns och inte är NULL. Om den finns använd det id annars skapa ny adress
 
-        //TODO Kontrollera om email är uniq och inte NULL - om den redan finns chasta ett exception tex NotUniqException
+        if (member.getEmail() == null || member.getEmail().isEmpty()) {
+            throw new InvalidInputException(); //TODO lägg in parametrar
+        }
+        if (isEmailTaken(member.getEmail())) {
+            throw new NotUniqException(); //TODO lägg in parametrar
+        }
 
-        //TODO kontrollera så att inte förnamn är NULL
         if (member.getFirstName() == null || member.getFirstName().isEmpty()) {
-            //Throw Exception
+            throw new InvalidInputException(); //TODO lägg till parametrar
         }
 
-        //TODO Kontrollera så att inte efternamn är NULL
         if (member.getLastName() == null || member.getLastName().isEmpty()) {
-            // Throw Exception
+           throw new InvalidInputException(); //TODO lägg till parametrar
         }
 
-        //TODO Kontrollera så att inte dateOfBirth är NULL även att det är ett datum som har varit och inte ligger i framtiden
-        return null;
+        if (member.getDateOfBirth() == null) {
+            throw new InvalidInputException(); //TODO lägg in parametrar
+        }
+        if (!isDateOfBirthValid(member.getDateOfBirth())) {
+            throw new InvalidInputException(); //TODO Lägg till parametrar
+        }
+        return memberRepository.save(member);
     }
 
     @Override
@@ -77,8 +91,7 @@ public class MemberService  implements MemberServiceInterface{
         if (result.isPresent()) {
             memberRepository.delete(result.get());
         }
-
-        throw new ResourceNotFoundException(); //Lägg till parametrar
+        throw new ResourceNotFoundException(); //TODO Lägg till parametrar
     }
 
     //Kontroll-metoder
