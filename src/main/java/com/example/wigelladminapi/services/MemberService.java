@@ -59,7 +59,7 @@ public class MemberService  implements MemberServiceInterface{
                 if (!isEmailTaken(member.getEmail())) {
                     updatedMember.setEmail(member.getEmail());
                 } else {
-                    throw new NotUniqException(); //TODO lägg till parametrar
+                    throw new NotUniqException("Email", member.getEmail());
                 }
             }
             if (member.getPhone() != null || member.getPhone().isEmpty()) {
@@ -89,7 +89,7 @@ public class MemberService  implements MemberServiceInterface{
             throw new InvalidInputException("Member", "email", member.getEmail());
         }
         if (isEmailTaken(member.getEmail())) {
-            throw new NotUniqException(); //TODO lägg in parametrar
+            throw new NotUniqException("Email", member.getEmail());
         }
 
         if (member.getFirstName() == null || member.getFirstName().isEmpty()) {

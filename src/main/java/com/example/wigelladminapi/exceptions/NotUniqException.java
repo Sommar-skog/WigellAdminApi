@@ -1,4 +1,17 @@
 package com.example.wigelladminapi.exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.CONFLICT)
 public class NotUniqException extends RuntimeException {
+
+    private String field;
+    private Object value;
+
+    public NotUniqException(String field, Object value) {
+        super(field + "[" + value + "]" + " is already taken");
+        this.field = field;
+        this.value = value;
+    }
 }
