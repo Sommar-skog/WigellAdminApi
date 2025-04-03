@@ -39,7 +39,7 @@ public class MemberService  implements MemberServiceInterface{
         if (result.isPresent()) {
             return result.get();
         }
-        throw new ResourceNotFoundException(); //TODO Lägg till rätt parametrar
+        throw new ResourceNotFoundException("Member", "id", id); //TODO Lägg till rätt parametrar
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MemberService  implements MemberServiceInterface{
             return memberRepository.save(updatedMember);
         }
 
-        throw new ResourceNotFoundException(); //TODO lägg till parametrar
+        throw new ResourceNotFoundException("Member", "id", member.getId()); //TODO lägg till parametrar
     }
 
     @Override
@@ -116,7 +116,7 @@ public class MemberService  implements MemberServiceInterface{
         if (result.isPresent()) {
             memberRepository.delete(result.get());
         }
-        throw new ResourceNotFoundException(); //TODO Lägg till parametrar
+        throw new ResourceNotFoundException("Member", "id", id);
     }
 
     //Kontroll-metoder
