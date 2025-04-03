@@ -39,7 +39,7 @@ public class MemberService  implements MemberServiceInterface{
         if (result.isPresent()) {
             return result.get();
         }
-        throw new ResourceNotFoundException("Member", "id", id); //TODO Lägg till rätt parametrar
+        throw new ResourceNotFoundException("Member", "id", id);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MemberService  implements MemberServiceInterface{
             return memberRepository.save(updatedMember);
         }
 
-        throw new ResourceNotFoundException("Member", "id", member.getId()); //TODO lägg till parametrar
+        throw new ResourceNotFoundException("Member", "id", member.getId());
     }
 
     @Override
@@ -86,25 +86,22 @@ public class MemberService  implements MemberServiceInterface{
         //TODO Kontrollera om adressen redan finns och inte är NULL. Om den finns använd det id annars skapa ny adress
 
         if (member.getEmail() == null || member.getEmail().isEmpty()) {
-            throw new InvalidInputException(); //TODO lägg in parametrar
+            throw new InvalidInputException("Member", "email", member.getEmail());
         }
         if (isEmailTaken(member.getEmail())) {
             throw new NotUniqException(); //TODO lägg in parametrar
         }
 
         if (member.getFirstName() == null || member.getFirstName().isEmpty()) {
-            throw new InvalidInputException(); //TODO lägg till parametrar
+            throw new InvalidInputException("Member", "firstName", member.getFirstName());
         }
 
         if (member.getLastName() == null || member.getLastName().isEmpty()) {
-           throw new InvalidInputException(); //TODO lägg till parametrar
+           throw new InvalidInputException("Member", "lastName", member.getLastName());
         }
 
-        if (member.getDateOfBirth() == null) {
-            throw new InvalidInputException(); //TODO lägg in parametrar
-        }
-        if (!isDateOfBirthValid(member.getDateOfBirth())) {
-            throw new InvalidInputException(); //TODO Lägg till parametrar
+        if (!isDateOfBirthValid(member.getDateOfBirth()) || member.getDateOfBirth() == null) {
+            throw new InvalidInputException("Member", "Date of birth", member.getDateOfBirth());
         }
         return memberRepository.save(member);
     }
