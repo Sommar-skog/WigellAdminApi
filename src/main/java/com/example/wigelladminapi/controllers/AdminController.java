@@ -54,7 +54,7 @@ public class AdminController {
     //Metoder för HTML
     @GetMapping("/deletemember")
     public String deleteMember(Model model) {
-        model.addAttribute("member", memberService.getAllMembers());
+        model.addAttribute("members", memberService.getAllMembers());
         return "listmembers";
     }
 

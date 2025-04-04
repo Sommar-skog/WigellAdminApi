@@ -29,10 +29,11 @@ public class MemberService  implements MemberServiceInterface{
     @Override
     public List<Member> getAllMembers() {
         List<Member> result = memberRepository.findAll();
-        if (!result.isEmpty()) {
+        return result;
+/*        if (!result.isEmpty()) {
             return result;
         }
-        throw new NoResultException("Member");
+        throw new NoResultException("Member");*/
     }
 
     @Override

@@ -5,6 +5,41 @@
     <title>List members</title>
 </head>
 <body>
-<h1>Members</h1>
+    <h1>Members</h1>
+    <div th:if="${members.size() == 0}">
+        <p>No members found!</p>
+    </div>
+    <div th:unless="${members.size() == 0}">
+        <h2 th:text="${members.size() + ' members found.'}"></h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Date of birth</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.getId()}"></td>
+                <td th:text="${member.getFirstName() + ' ' + member.getLastName()}"></td>
+                <td th:utext="${member.getAddress().getStreet() + '<br/>' + member.getAddress().getPostalCode() + ' ' + member.getAddress().getCity()}"></td>
+                <td th:text="${member.getEmail()}"></td>
+                <td th:text="${member.getPhone()}"></td>
+                <td th:text="${member.getDateOfBirth()}"></td>
+                <td>
+                    <form action="/admin/deletememberbyid" method="post">
+                        <input type="hidden" name="id" th:value="${member.getId()}" />
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
