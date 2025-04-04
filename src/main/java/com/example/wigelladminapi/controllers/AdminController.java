@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,6 @@ public class AdminController {
         this.memberService = memberService;
     }
 
-
     //Get
     @GetMapping("/members")
     public ResponseEntity<List<Member>> getAllMembers() {
@@ -32,11 +32,6 @@ public class AdminController {
     public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
         return ResponseEntity.ok(memberService.getMemberById(id));
     }
-
-    //@GetMapping("/deletemember") //lista alla medlemmar på hemsidan
-
-
-    //TODO deletefunktionen på HTML-sidan
 
     //Post
     @PostMapping("/addmember")
@@ -54,5 +49,18 @@ public class AdminController {
     @DeleteMapping("/deletemember/{id}")
     public ResponseEntity<String> deleteMember(@PathVariable Long id) {
         return memberService.deleteMember(id);
+    }
+
+    //Metoder för HTML
+    @GetMapping("/deletemember")
+    public String deleteMember(Model model) {
+        model.addAttribute("member", memberService.getAllMembers());
+        return "listmembers";
+    }
+
+    @PostMapping("/deletememberbyid")
+    public String deleteMemberById(@RequestParam Long id) {
+        memberService.deleteMember(id);
+        return "redirect:/admin/deletemember";
     }
 }

@@ -50,7 +50,6 @@ public class MemberService  implements MemberServiceInterface{
 
         if (memberToUpdate.isPresent()) {
             Member updatedMember = memberToUpdate.get();
-            //TODO Gör NULL-kontroller och uppdatera endast fälten som skickas in som inte är null
             if (member.getFirstName() != null){
                 if (!member.getFirstName().isEmpty()){
                     updatedMember.setFirstName(member.getFirstName());
@@ -70,7 +69,6 @@ public class MemberService  implements MemberServiceInterface{
                         throw new NotUniqException("Email", member.getEmail());
                     }
                 }
-
             }
             if (member.getPhone() != null) {
                 if (!member.getPhone().isEmpty()){
