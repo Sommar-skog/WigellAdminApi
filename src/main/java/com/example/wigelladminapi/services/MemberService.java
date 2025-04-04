@@ -7,6 +7,8 @@ import com.example.wigelladminapi.exceptions.ResourceNotFoundException;
 import com.example.wigelladminapi.repositories.MemberRepository;
 import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -107,11 +109,12 @@ public class MemberService  implements MemberServiceInterface{
     }
 
     @Override
-    public void deleteMember(Long id) {
+    public ResponseEntity<String> deleteMember(Long id) {
         //Ska jag använda string för konfermation? delited/not deleted
         Optional<Member> result = memberRepository.findById(id);
         if (result.isPresent()) {
             memberRepository.delete(result.get());
+            return new ResponseEntity<>("Member with id " + id + " deleted", HttpStatus.OK);
         }
         throw new ResourceNotFoundException("Member", "id", id);
     }

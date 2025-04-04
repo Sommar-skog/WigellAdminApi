@@ -1,6 +1,7 @@
 package com.example.wigelladminapi.services;
 
 import com.example.wigelladminapi.entities.Member;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface MemberServiceInterface {
     Member getMemberById(Long id);
     Member updateMember(Member member);
     Member addMember(Member member);
-    void deleteMember(Long id);
+    ResponseEntity<String> deleteMember(Long id);
 
 
 }
