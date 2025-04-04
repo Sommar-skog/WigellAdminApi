@@ -33,7 +33,8 @@ public class AdminController {
         return ResponseEntity.ok(memberService.getMemberById(id));
     }
 
-    @GetMapping("/deletemember") //lista alla medlemmar på hemsidan
+    //@GetMapping("/deletemember") //lista alla medlemmar på hemsidan
+
 
     //TODO deletefunktionen på HTML-sidan
 

@@ -11,7 +11,7 @@ public class InvalidInputException  extends RuntimeException{
     private Object value;
 
     public InvalidInputException(String object, String field, Object value) {
-        super("Invalid input: " + object + " [" + field + "] cannot  be" + value);
+        super(String.format("Invalid input: " + object + " [" + field + "] cannot  be" + value));
         this.object = object;
         this.field = field;
         this.value = value;

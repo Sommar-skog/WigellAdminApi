@@ -9,7 +9,7 @@ public class NoResultException extends RuntimeException {
     private String object;
 
     public NoResultException (String object){
-        super("No result found for " + object);
+        super(String.format("No result found for " + object));
         this.object = object;
     }
 }

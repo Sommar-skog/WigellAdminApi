@@ -51,21 +51,31 @@ public class MemberService  implements MemberServiceInterface{
         if (memberToUpdate.isPresent()) {
             Member updatedMember = memberToUpdate.get();
             //TODO Gör NULL-kontroller och uppdatera endast fälten som skickas in som inte är null
-            if (member.getFirstName() != null || member.getFirstName().isEmpty()) {
-                updatedMember.setFirstName(member.getFirstName());
-            }
-            if (member.getLastName() != null || member.getLastName().isEmpty()) {
-                updatedMember.setLastName(member.getLastName());
-            }
-            if (member.getEmail() != null || member.getEmail().isEmpty()) {
-                if (!isEmailTaken(member.getEmail())) {
-                    updatedMember.setEmail(member.getEmail());
-                } else {
-                    throw new NotUniqException("Email", member.getEmail());
+            if (member.getFirstName() != null){
+                if (!member.getFirstName().isEmpty()){
+                    updatedMember.setFirstName(member.getFirstName());
                 }
             }
-            if (member.getPhone() != null || member.getPhone().isEmpty()) {
-                updatedMember.setPhone(member.getPhone());
+
+            if (member.getLastName() != null){
+                if (!member.getLastName().isEmpty()){
+                    updatedMember.setLastName(member.getLastName());
+                }
+            }
+            if (member.getEmail() != null) {
+                if (!member.getEmail().isEmpty()){
+                    if (!isEmailTaken(member.getEmail())) {
+                        updatedMember.setEmail(member.getEmail());
+                    } else {
+                        throw new NotUniqException("Email", member.getEmail());
+                    }
+                }
+
+            }
+            if (member.getPhone() != null) {
+                if (!member.getPhone().isEmpty()){
+                    updatedMember.setPhone(member.getPhone());
+                }
             }
             if (member.getDateOfBirth() != null) {
                 if(isDateOfBirthValid(member.getDateOfBirth())) {
