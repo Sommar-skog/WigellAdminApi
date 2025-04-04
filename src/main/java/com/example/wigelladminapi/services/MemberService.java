@@ -30,7 +30,7 @@ public class MemberService  implements MemberServiceInterface{
         if (!result.isEmpty()) {
             return result;
         }
-        throw new NoResultException(); //Ändra till rätt inparametrar
+        throw new NoResultException("Member");
     }
 
     @Override
