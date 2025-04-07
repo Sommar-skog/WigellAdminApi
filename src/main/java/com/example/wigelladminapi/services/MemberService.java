@@ -1,5 +1,6 @@
 package com.example.wigelladminapi.services;
 
+import com.example.wigelladminapi.entities.Address;
 import com.example.wigelladminapi.entities.Member;
 import com.example.wigelladminapi.exceptions.InvalidInputException;
 import com.example.wigelladminapi.exceptions.NotUniqException;
@@ -19,10 +20,12 @@ import java.util.Optional;
 public class MemberService  implements MemberServiceInterface{
 
     private final MemberRepository memberRepository;
+    private final AddressService addressService;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, AddressService addressService) {
         this.memberRepository = memberRepository;
+        this.addressService = addressService;
     }
 
     @Override
@@ -76,7 +79,7 @@ public class MemberService  implements MemberServiceInterface{
                 }
             }
             if (member.getAddress() != null){
-                //TODO lägg till validering av adress
+                updatedMember.setAddress(validateAddress(updatedMember.getAddress()));
 
             }
             return memberRepository.save(updatedMember);
@@ -87,8 +90,23 @@ public class MemberService  implements MemberServiceInterface{
 
     @Override
     public Member addMember(Member member) {
+        Member memberToAdd = member;
 
-        //TODO Kontrollera om adressen redan finns och inte är NULL. Om den finns använd det id annars skapa ny adress
+        if (member.getAddress() == null) {
+            throw new InvalidInputException("Member", "address", null);
+        }
+        if (member.getAddress() != null){
+            if (member.getAddress().getId() == null){
+                if (member.getAddress().getStreet() == null || member.getAddress().getStreet().isEmpty() ||
+                        member.getAddress().getPostalCode() == null || member.getAddress().getPostalCode().isEmpty() ||
+                        member.getAddress().getCity() == null || member.getAddress().getCity().isEmpty()){
+                    throw new InvalidInputException("Member", "address fields", member.getAddress());
+                }
+            }
+
+            Address address = validateAddress(member.getAddress());
+            memberToAdd.setAddress(address);
+        }
 
         if (member.getEmail() == null || member.getEmail().isEmpty()) {
             throw new InvalidInputException("Member", "email", member.getEmail());
@@ -108,7 +126,7 @@ public class MemberService  implements MemberServiceInterface{
         if (!isDateOfBirthValid(member.getDateOfBirth()) || member.getDateOfBirth() == null) {
             throw new InvalidInputException("Member", "Date of birth", member.getDateOfBirth());
         }
-        return memberRepository.save(member);
+        return memberRepository.save(memberToAdd);
     }
 
     @Override
@@ -129,6 +147,23 @@ public class MemberService  implements MemberServiceInterface{
 
     private boolean isDateOfBirthValid(LocalDate dateOfBirth) {
         return dateOfBirth.isBefore(LocalDate.now()) && dateOfBirth.isAfter(LocalDate.now().minusYears(115));
+    }
+
+    private Address validateAddress(Address address) {
+        Address toReturn;
+        if (address.getId() != null) {
+            toReturn = addressService.findAddressById(address.getId());
+            if (toReturn != null) {
+                return toReturn;
+            }
+        } else if (address.getStreet() != null && address.getPostalCode() != null && address.getCity() != null) {
+            toReturn = addressService.findAdressByStreetAndPostalCodeAndCity(address.getStreet(), address.getPostalCode(), address.getCity());
+            if (toReturn != null) {
+                return toReturn;
+            }
+            return addressService.addAdress(address);
+        }
+        return null;
     }
 
 
