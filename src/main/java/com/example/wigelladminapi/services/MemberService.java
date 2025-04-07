@@ -25,7 +25,6 @@ public class MemberService  implements MemberServiceInterface{
         this.memberRepository = memberRepository;
     }
 
-
     @Override
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
