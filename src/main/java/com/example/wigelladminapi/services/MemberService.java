@@ -79,8 +79,15 @@ public class MemberService  implements MemberServiceInterface{
                 }
             }
             if (member.getAddress() != null){
-                updatedMember.setAddress(validateAddress(updatedMember.getAddress()));
-
+                    if (member.getAddress().getId() == null) {
+                        if (member.getAddress().getStreet() == null || member.getAddress().getStreet().isEmpty() ||
+                                member.getAddress().getPostalCode() == null || member.getAddress().getPostalCode().isEmpty() ||
+                                member.getAddress().getCity() == null || member.getAddress().getCity().isEmpty()) {
+                            throw new InvalidInputException("Member", "address fields", member.getAddress());
+                        }
+                    }
+                    Address address = validateAddress(member.getAddress());
+                    updatedMember.setAddress(address);
             }
             return memberRepository.save(updatedMember);
         }
