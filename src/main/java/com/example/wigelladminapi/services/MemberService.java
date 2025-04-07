@@ -28,12 +28,7 @@ public class MemberService  implements MemberServiceInterface{
 
     @Override
     public List<Member> getAllMembers() {
-        List<Member> result = memberRepository.findAll();
-        return result;
-/*        if (!result.isEmpty()) {
-            return result;
-        }
-        throw new NoResultException("Member");*/
+        return memberRepository.findAll();
     }
 
     @Override
