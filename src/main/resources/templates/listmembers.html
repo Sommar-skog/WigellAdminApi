@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>List members</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
     <h1>Members</h1>
     <div th:if="${members.size() == 0}">
-        <p>No members found!</p>
+        <h2>No members found!</h2>
     </div>
     <div th:unless="${members.size() == 0}">
         <h2 th:text="${members.size() + ' members found.'}"></h2>
