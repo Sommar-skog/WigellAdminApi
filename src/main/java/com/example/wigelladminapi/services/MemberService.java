@@ -6,7 +6,6 @@ import com.example.wigelladminapi.exceptions.InvalidInputException;
 import com.example.wigelladminapi.exceptions.NotUniqException;
 import com.example.wigelladminapi.exceptions.ResourceNotFoundException;
 import com.example.wigelladminapi.repositories.MemberRepository;
-import jakarta.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,17 +77,9 @@ public class MemberService  implements MemberServiceInterface{
                     updatedMember.setDateOfBirth(member.getDateOfBirth());
                 }
             }
-            if (member.getAddress() != null){
-                    if (member.getAddress().getId() == null) {
-                        if (member.getAddress().getStreet() == null || member.getAddress().getStreet().isEmpty() ||
-                                member.getAddress().getPostalCode() == null || member.getAddress().getPostalCode().isEmpty() ||
-                                member.getAddress().getCity() == null || member.getAddress().getCity().isEmpty()) {
-                            throw new InvalidInputException("Member", "address fields", member.getAddress());
-                        }
-                    }
-                    Address address = validateAddress(member.getAddress());
-                    updatedMember.setAddress(address);
-            }
+
+            validateAndSetAddress(member, updatedMember);
+
             return memberRepository.save(updatedMember);
         }
 
@@ -97,23 +88,13 @@ public class MemberService  implements MemberServiceInterface{
 
     @Override
     public Member addMember(Member member) {
-        Member memberToAdd = member;
+        //Member memberToAdd = member;
 
         if (member.getAddress() == null) {
             throw new InvalidInputException("Member", "address", null);
         }
-        if (member.getAddress() != null){
-            if (member.getAddress().getId() == null){
-                if (member.getAddress().getStreet() == null || member.getAddress().getStreet().isEmpty() ||
-                        member.getAddress().getPostalCode() == null || member.getAddress().getPostalCode().isEmpty() ||
-                        member.getAddress().getCity() == null || member.getAddress().getCity().isEmpty()){
-                    throw new InvalidInputException("Member", "address fields", member.getAddress());
-                }
-            }
 
-            Address address = validateAddress(member.getAddress());
-            memberToAdd.setAddress(address);
-        }
+        validateAndSetAddress(member);
 
         if (member.getEmail() == null || member.getEmail().isEmpty()) {
             throw new InvalidInputException("Member", "email", member.getEmail());
@@ -133,12 +114,11 @@ public class MemberService  implements MemberServiceInterface{
         if (!isDateOfBirthValid(member.getDateOfBirth()) || member.getDateOfBirth() == null) {
             throw new InvalidInputException("Member", "Date of birth", member.getDateOfBirth());
         }
-        return memberRepository.save(memberToAdd);
+        return memberRepository.save(member);
     }
 
     @Override
     public ResponseEntity<String> deleteMember(Long id) {
-        //Ska jag använda string för konfermation? delited/not deleted
         Optional<Member> result = memberRepository.findById(id);
         if (result.isPresent()) {
             memberRepository.delete(result.get());
@@ -148,12 +128,16 @@ public class MemberService  implements MemberServiceInterface{
     }
 
     //Kontroll-metoder
-    private boolean isEmailTaken(String email) {
-        return memberRepository.existsByEmail(email);
+    private void validateAndSetAddress(Member member) {
+        validateAddressFields(member.getAddress());
+        Address address = validateAddress(member.getAddress());
+        member.setAddress(address);
     }
 
-    private boolean isDateOfBirthValid(LocalDate dateOfBirth) {
-        return dateOfBirth.isBefore(LocalDate.now()) && dateOfBirth.isAfter(LocalDate.now().minusYears(115));
+    private void validateAndSetAddress(Member originalMember, Member incomingMember) {
+        validateAddressFields(originalMember.getAddress());
+        Address address = validateAddress(originalMember.getAddress());
+        incomingMember.setAddress(address);
     }
 
     private Address validateAddress(Address address) {
@@ -173,5 +157,23 @@ public class MemberService  implements MemberServiceInterface{
         return null;
     }
 
+    private void validateAddressFields(Address address) {
+        if (address != null) {
+            if (address.getId() == null) {
+                if (address.getStreet() == null || address.getStreet().isEmpty() ||
+                        address.getPostalCode() == null || address.getPostalCode().isEmpty() ||
+                        address.getCity() == null || address.getCity().isEmpty()) {
+                    throw new InvalidInputException("Member", "address fields", address);
+                }
+            }
+        }
+    }
 
+    private boolean isEmailTaken(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
+    private boolean isDateOfBirthValid(LocalDate dateOfBirth) {
+        return dateOfBirth.isBefore(LocalDate.now()) && dateOfBirth.isAfter(LocalDate.now().minusYears(115));
+    }
 }

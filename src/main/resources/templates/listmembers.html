@@ -22,7 +22,7 @@
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Date of birth</th>
-                <th>Delete</th>
+                <th>Delete Member</th>
             </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@
                 <td>
                     <form action="/admin/deletememberbyid" method="post">
                         <input type="hidden" name="id" th:value="${member.getId()}" />
-                        <button type="submit">Delete</button>
+                        <button type="submit">Delete Member</button>
                     </form>
                 </td>
             </tr>
