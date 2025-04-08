@@ -154,7 +154,7 @@ public class MemberService  implements MemberServiceInterface{
             }
             return addressService.addAdress(address);
         }
-        return null;
+        throw new IllegalStateException("Failed to validate or create address. Input: " + address); //TODO omvandla till eget exception som ger @ResponseStatus 422 Unprocessable Entity
     }
 
     private void validateAddressFields(Address address) {
