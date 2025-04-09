@@ -47,54 +47,22 @@ public class MemberService  implements MemberServiceInterface{
 
         if (memberToUpdate.isPresent()) {
             Member updatedMember = memberToUpdate.get();
-          /*  if (member.getFirstName() != null){
-                if (!member.getFirstName().isEmpty()){
-                    updatedMember.setFirstName(member.getFirstName());
-                }
-            }*/
 
             if (isValidForUpdate(member.getFirstName())){
                 updatedMember.setFirstName(member.getFirstName());
             }
 
-/*            if (member.getLastName() != null){
-                if (!member.getLastName().isEmpty()){
-                    updatedMember.setLastName(member.getLastName());
-                }
-            }*/
             if (isValidForUpdate(member.getLastName())){
                 updatedMember.setLastName(member.getLastName());
             }
-
-/*            if (member.getEmail() != null) {
-                if (!member.getEmail().isEmpty()){
-                    if (!isEmailTaken(member.getEmail())) {
-                        updatedMember.setEmail(member.getEmail());
-                    } else {
-                        throw new NotUniqException("Email", member.getEmail());
-                    }
-                }
-            }*/
 
             if (isValidForUpdate(member.getEmail()) && !isEmailTaken(member.getEmail())){
                 updatedMember.setEmail(member.getEmail());
             }
 
-/*            if (member.getPhone() != null) {
-                if (!member.getPhone().isEmpty()){
-                    updatedMember.setPhone(member.getPhone());
-                }
-            }*/
-
             if (isValidForUpdate(member.getPhone())){
                 updatedMember.setPhone(member.getPhone());
             }
-
-/*            if (member.getDateOfBirth() != null) {
-                if(isDateOfBirthValid(member.getDateOfBirth())) {
-                    updatedMember.setDateOfBirth(member.getDateOfBirth());
-                }
-            }*/
 
             if (isValidForUpdate(member.getDateOfBirth()) && isDateOfBirthValid(member.getDateOfBirth())){
                 updatedMember.setDateOfBirth(member.getDateOfBirth());
@@ -104,15 +72,10 @@ public class MemberService  implements MemberServiceInterface{
                 validateAndSetAddress(member, updatedMember);
             }
 
-
             return memberRepository.save(updatedMember);
         }
 
         throw new ResourceNotFoundException("Member", "id", member.getId());
-    }
-
-    private boolean isValidForUpdate(Object input) {
-        return input != null && (!(input instanceof String) || !((String) input).isEmpty());
     }
 
     @Override
@@ -147,6 +110,10 @@ public class MemberService  implements MemberServiceInterface{
     }
 
     //Kontroll-metoder
+    private boolean isValidForUpdate(Object input) {
+        return input != null && (!(input instanceof String) || !((String) input).isEmpty());
+    }
+
     private void validateInputAddMember(String field, Object input) {
         if (input == null || input instanceof String && ((String) input).isEmpty()) {
             throw new InvalidInputException("Member", field, input);
