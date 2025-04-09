@@ -10,7 +10,7 @@ public class NotUniqException extends RuntimeException {
     private Object value;
 
     public NotUniqException(String field, Object value) {
-        super(String.format(field + "[" + value + "]" + " is already taken"));
+        super(String.format(field + " [" + value + "]" + " is already taken"));
         this.field = field;
         this.value = value;
     }
