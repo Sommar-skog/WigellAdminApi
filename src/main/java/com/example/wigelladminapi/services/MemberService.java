@@ -88,33 +88,29 @@ public class MemberService  implements MemberServiceInterface{
 
     @Override
     public Member addMember(Member member) {
-        //Member memberToAdd = member;
-
-        if (member.getAddress() == null) {
-            throw new InvalidInputException("Member", "address", null);
-        }
-
+        validateInputAddMember("Address", member.getAddress());
         validateAndSetAddress(member);
 
-        if (member.getEmail() == null || member.getEmail().isEmpty()) {
-            throw new InvalidInputException("Member", "email", member.getEmail());
-        }
+        validateInputAddMember("Email", member.getEmail());
         if (isEmailTaken(member.getEmail())) {
             throw new NotUniqException("Email", member.getEmail());
         }
 
-        if (member.getFirstName() == null || member.getFirstName().isEmpty()) {
-            throw new InvalidInputException("Member", "firstName", member.getFirstName());
-        }
+        validateInputAddMember("Phone", member.getPhone());
+        validateInputAddMember("FirstName", member.getFirstName());
+        validateInputAddMember("LastName", member.getLastName());
 
-        if (member.getLastName() == null || member.getLastName().isEmpty()) {
-           throw new InvalidInputException("Member", "lastName", member.getLastName());
-        }
-
-        if (!isDateOfBirthValid(member.getDateOfBirth()) || member.getDateOfBirth() == null) {
-            throw new InvalidInputException("Member", "Date of birth", member.getDateOfBirth());
+        validateInputAddMember("DateOfBirth", member.getDateOfBirth());
+        if (!isDateOfBirthValid(member.getDateOfBirth())) {
+            throw new InvalidInputException("Member", "DateOfBirth", member.getDateOfBirth());
         }
         return memberRepository.save(member);
+    }
+
+    private void validateInputAddMember(String field, Object input) {
+        if (input == null || input instanceof String && ((String) input).isEmpty()) {
+                throw new InvalidInputException("Member", field, input);
+        }
     }
 
     @Override
