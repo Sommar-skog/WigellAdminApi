@@ -5,6 +5,7 @@ import com.example.wigelladminapi.entities.Member;
 import com.example.wigelladminapi.exceptions.InvalidInputException;
 import com.example.wigelladminapi.exceptions.NotUniqException;
 import com.example.wigelladminapi.exceptions.ResourceNotFoundException;
+import com.example.wigelladminapi.exceptions.UnprocessableEntityException;
 import com.example.wigelladminapi.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -146,7 +147,7 @@ public class MemberService  implements MemberServiceInterface{
             }
             return addressService.addAdress(address);
         }
-        throw new IllegalStateException("Failed to validate or create address. Input: " + address); //TODO omvandla till eget exception som ger @ResponseStatus 422 Unprocessable Entity
+        throw new UnprocessableEntityException("Failed to validate or create address", address);
     }
 
     private void validateAddressFields(Address address) {
