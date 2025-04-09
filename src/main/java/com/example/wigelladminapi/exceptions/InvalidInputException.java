@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidInputException  extends RuntimeException{
 
-    private String object;
-    private String field;
-    private Object value;
+    private final String object;
+    private final String field;
+    private final Object value;
 
     public InvalidInputException(String object, String field, Object value) {
         super(String.format("Invalid input: " + object + " [" + field + "] cannot  be " + value));
