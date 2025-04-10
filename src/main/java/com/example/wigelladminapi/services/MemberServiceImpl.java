@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberServiceImpl implements MemberService {
+public class
+MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final AddressServiceImpl addressServiceImpl;
