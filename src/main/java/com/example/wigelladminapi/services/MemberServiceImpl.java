@@ -139,14 +139,15 @@ public class MemberServiceImpl implements MemberService {
             if (toReturn != null) {
                 return toReturn;
             }
-        } else if (address.getStreet() != null && address.getPostalCode() != null && address.getCity() != null) {
-            toReturn = addressServiceImpl.findAdressByStreetAndPostalCodeAndCity(address.getStreet(), address.getPostalCode(), address.getCity());
-            if (toReturn != null) {
-                return toReturn;
-            }
-            return addressServiceImpl.addAdress(address);
+            throw new ResourceNotFoundException("Address", "id", address.getId());
         }
-        throw new UnprocessableEntityException("Failed to validate or create address", address);
+
+        toReturn = addressServiceImpl.findAdressByStreetAndPostalCodeAndCity(address.getStreet(), address.getPostalCode(), address.getCity());
+
+        if (toReturn != null) {
+            return toReturn;
+        }
+        return addressServiceImpl.addAdress(address);
     }
 
     private void validateAddressFields(Address address) {
