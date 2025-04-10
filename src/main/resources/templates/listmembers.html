@@ -31,7 +31,7 @@
                 <td th:text="${member.getFirstName() + ' ' + member.getLastName()}"></td>
                 <td th:utext="${member.getAddress().getStreet() + '<br/>' + member.getAddress().getPostalCode() + ' ' + member.getAddress().getCity()}"></td>
                 <td th:text="${member.getEmail()}"></td>
-                <td th:text="${member.getPhone()}"></td>
+                <td th:text="${member.phone != null ? member.phone : 'No phone number registered'}"></td>
                 <td th:text="${member.getDateOfBirth()}"></td>
                 <td>
                     <form action="/admin/deletememberbyid" method="post">

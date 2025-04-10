@@ -110,7 +110,6 @@ public class MemberServiceImpl implements MemberService {
         throw new ResourceNotFoundException("Member", "id", id);
     }
 
-    //Kontroll-metoder
     private boolean isValidForUpdate(Object input) {
         return input != null && (!(input instanceof String) || !((String) input).isEmpty());
     }
