@@ -5,7 +5,6 @@ import com.example.wigelladminapi.entities.Member;
 import com.example.wigelladminapi.exceptions.InvalidInputException;
 import com.example.wigelladminapi.exceptions.NotUniqException;
 import com.example.wigelladminapi.exceptions.ResourceNotFoundException;
-import com.example.wigelladminapi.exceptions.UnprocessableEntityException;
 import com.example.wigelladminapi.repositories.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
