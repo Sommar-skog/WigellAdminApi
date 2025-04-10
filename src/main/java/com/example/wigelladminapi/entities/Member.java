@@ -3,7 +3,6 @@ package com.example.wigelladminapi.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name= "member")
@@ -31,6 +30,7 @@ public class Member {
 
     @Column(name = "date_of_birth", nullable = false, length = 10)
     private LocalDate dateOfBirth;
+
     public Member() {
 
     }
