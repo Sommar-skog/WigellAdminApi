@@ -89,7 +89,7 @@ MemberServiceImpl implements MemberService {
             throw new NotUniqException("Email", member.getEmail());
         }
 
-        validateInputAddMember("Phone", member.getPhone());
+        //validateInputAddMember("Phone", member.getPhone());
         validateInputAddMember("FirstName", member.getFirstName());
         validateInputAddMember("LastName", member.getLastName());
 
